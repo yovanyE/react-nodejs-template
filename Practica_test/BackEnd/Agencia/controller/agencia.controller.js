@@ -4,7 +4,7 @@ const mysql=require('../database');
 agenciaCtrl.addAgencia=async function(req,res){
     var {nombre,latitud,longitud,cant_personas,capacidad_personas}=req.body;
 
-    var filePath=req.file.path.split('\\')[0]+'/'+req.file.path.split('\\')[1];
+    var filePath='/'+req.file.path.split('\\')[0]+'/'+req.file.path.split('\\')[1];
 
     const sql=`CALL crearAgencia('${nombre}',${latitud},${longitud},${cant_personas},${capacidad_personas},'${filePath}');`;
     
@@ -40,12 +40,12 @@ agenciaCtrl.updateAgencia=function(req,res,next){
 agenciaCtrl.updateAgenciaWithPhoto=function(req,res,next){
     var {idagencia, foto}=req.body;
     if(req.file){
-        foto=req.file.path.split('\\')[0]+'/'+req.file.path.split('\\')[1];
+        foto='/'+req.file.path.split('\\')[0]+'/'+req.file.path.split('\\')[1];
     }
     const sql=`CALL updatePhotoAgencia(${idagencia},'${foto}')`;
     mysql.query(sql,function(err,result){
         if(!err){
-            return res.status(200).json({"Success": "foto actualizada"});
+            return res.status(200).json(result[0]);
         }else{
             return res.status(400).json({"Error": err.sqlMessage});
         }

@@ -21,6 +21,7 @@ CREATE TABLE tagencia(
     longitud double(18,2),
     cant_personas INT,
     capacidad_personas INT,
+    foto VARCHAR(250),
     CONSTRAINT PK_tagencia PRIMARY KEY(idagencia)
 );
 

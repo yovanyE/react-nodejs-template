@@ -80,7 +80,8 @@ IN _nombre VARCHAR(80),
 IN _latitud double(18,2),
 IN _longitud double(18,2),
 IN _cantidad_personas INT,
-IN _capacidad_personas INT
+IN _capacidad_personas INT,
+IN _foto VARCHAR(250)
 )
 BEGIN
 	SET @idagencia=(SELECT max(idagencia)+1 FROM tagencia);
@@ -88,8 +89,8 @@ BEGIN
     THEN 
 		SET @idagencia=1;
     END IF;
-    INSERT INTO tagencia(idagencia,nombre,latitud,longitud,cant_personas,capacidad_personas)
-    VALUES(@idagencia,_nombre,_latitud,_longitud,_cantidad_personas,_capacidad_personas);
+    INSERT INTO tagencia(idagencia,nombre,latitud,longitud,cant_personas,capacidad_personas,foto)
+    VALUES(@idagencia,_nombre,_latitud,_longitud,_cantidad_personas,_capacidad_personas,_foto);
 END$$
 -- actualizar agencias
 DROP PROCEDURE IF EXISTS updateAgencia;
@@ -152,13 +153,14 @@ CREATE PROCEDURE crearttipoServicio(
 IN _descripcion VARCHAR(100)
 )
 BEGIN 
-	SET @idtiposervicio=(SELECT MAX(idtiposervicio)+1 FROM ttipo_servicio);
+	 SET @idtiposervicio=(SELECT MAX(idtiposervicio)+1 FROM ttipo_servicio);
     IF @idtiposervicio  IS NULL 
     THEN
      SET @idtiposervicio=1;
     END IF;
 		INSERT ttipo_servicio(idtiposervicio,descripcion)
         VALUES(@idtiposervicio,_descripcion);
+	SELECT @idtiposervicio idtiposervicio, _descripcion descripcion; 
 END$$
 
 DROP PROCEDURE IF EXISTS updatettipoServicio;
@@ -171,6 +173,7 @@ BEGIN
 	UPDATE ttipo_servicio
     SET descripcion=_descripcion
     WHERE idtiposervicio=_idttiposervicio;
+    select _idttiposervicio idtiposervicio, _descripcion descripcion;
 END$$
 
 DROP PROCEDURE IF EXISTS consultarttipoServicio;
