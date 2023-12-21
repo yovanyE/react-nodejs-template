@@ -200,7 +200,7 @@ BEGIN
     )
     THEN 
 	INSERT INTO tservicio_agencia(idagencia,descripcion,idtiposervicio)
-    VALUES(_idagencia,descripcion,_idtiposervicio);
+    VALUES(_idagencia,_descripcion,_idtiposervicio);
     END IF;
 END$$
 -- consultar servicio - agencia 
@@ -210,9 +210,14 @@ CREATE PROCEDURE consultservicio_agencia(
 )
 BEGIN 
 	SELECT 
+    CONCAT(tsa.idagencia,'',tsa.idtiposervicio) as id,
     ta.idagencia as idagencia,
     ta.nombre as agencia,
-    tts.descripcion as servicio
+    tts.descripcion as servicio,
+    tsa.descripcion as descripcion,
+    ta.foto as foto_agency,
+    ta.cant_personas as cantidad_personas,
+    ta.capacidad_personas as capacidad_agency
     FROM tservicio_agencia tsa
     INNER JOIN tagencia ta ON ta.idagencia=tsa.idagencia
     INNER JOIN ttipo_servicio tts ON tts.idtiposervicio=tsa.idtiposervicio;
@@ -234,3 +239,15 @@ BEGIN
     WHERE ta.nombre like CONCAT('%',_agencia,'%');
 END$$
 
+DROP PROCEDURE IF EXISTS updatePhotoAgencia;
+DELIMITER $$
+CREATE PROCEDURE updatePhotoAgencia (
+IN _idagencia INT,
+IN _foto VARCHAR(250)
+)
+BEGIN
+	UPDATE tagencia set foto=_foto
+    WHERE idagencia=_idagencia;
+    
+    select _idagencia idagencia, _foto foto;
+END$$

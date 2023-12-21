@@ -51,7 +51,6 @@ const ModalAgency=({styleModal,headerStyle,footerStyle,styleIcon,tmptUpdateImage
                     style={{ display:  'none' }}
                     />
                 </Grid>
-
                 <div style={footerStyle}>
                     <Button type="submit" variant="contained" sx={{backgroundColor: colors.primary[100]}}>
                         Actualizar

@@ -12,6 +12,7 @@ import Form from "./scenes/form";
 import Bar from "./scenes/bar";
 import {TypeServiceProvider} from './context/TypeServiceContext';
 import { AgencyContextProvider } from "./context/AgencyContext";
+import { ServiceAgencyContextProvider } from "./context/serviceAgencyContext";
 import { ListAgency } from "./scenes/agency/listAgency/ListAgency";
 import {NotFoundPage} from './scenes/NotFoundPage'
 function App() {
@@ -22,15 +23,18 @@ function App() {
       <ThemeProvider theme={theme}>
         <TypeServiceProvider>
         <AgencyContextProvider>
+          <ServiceAgencyContextProvider>
         <CssBaseline/>
-        <div className="app">
+        <div className="app" style={{ display: "flex" }}>
           <Sidebar/>
         <main className="content"
            style={{
-            marginLeft: "24px", // Ajusta el margen izquierdo para que coincida con el ancho de la barra lateral
+            marginLeft: "0px", // Ajusta el margen izquierdo para que coincida con el ancho de la barra lateral
             height: "100vh", // Ajusta la altura al 100% del viewport
             overflowY: "auto", // Hace que haya un scroll vertical solo cuando sea necesario
-            padding: "20px", // Ajusta el relleno según sea necesario
+            padding: "0px", // Ajusta el relleno según sea necesario
+            boxSizing: "border-box",  // Añade esta propiedad para tener en cuenta el padding en el cálculo del tamaño
+            marginBottom: "56px",  // Añade un margen inferior para evitar la superposición con el Topbar
           }}
         >
           <Topbar/>
@@ -48,6 +52,7 @@ function App() {
           </Routes>
         </main>
         </div>
+        </ServiceAgencyContextProvider>
         </AgencyContextProvider>
         </TypeServiceProvider>
       </ThemeProvider>
